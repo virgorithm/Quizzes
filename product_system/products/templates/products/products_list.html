@@ -2,12 +2,101 @@
 <html>
 <head>
     <title>Product List</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #020a1b;
+            color: #111827;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #fff;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: rgb(142, 138, 138);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image {
+            height: 220px;
+            background-color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-placeholder {
+            width: 90px;
+            height: 120px;
+            background-color: #2563eb;
+            border-radius: 10px;
+        }
+
+        .product-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #ffff;
+        }
+
+        .product-price {
+            font-size: 18px;
+            color: #21038c;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            color: #6b7280;
+        }
+    </style>
 </head>
 <body>
-    <h1>Products</h1>
 
-    {% for product in products %}
-        <p>{{ product.name }} - ₱{{ product.price|floatformat:0 }}</p>
-    {% endfor %}
+    <div class="container">
+        <h1>Our Products</h1>
+
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-placeholder"></div>
+                    </div>
+
+                    <div class="product-content">
+                        <div class="product-name">{{ product.name }}</div>
+                        <div class="product-price">₱{{ product.price|floatformat:0 }}</div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="empty">No products available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
 </body>
 </html>
