@@ -1,23 +1,27 @@
 from django.db import models
 
 
-class Vehicle(models.Model):
-    brand = models.CharField(max_length=100)
-    price = models.FloatField()
+class Account(models.Model):
+    name = models.CharField(max_length=100)
+    _balance = models.FloatField()
 
-    def vehicle_info(self):
-        return f"{self.brand} costs {self.price:g}"
+    def display_info(self):
+        return f"Account of {self.name} has balance {self._balance:g}"
 
+    def deposit(self, amount):
+        if amount > 0:
+            self._balance += amount
+            self.save()
 
-class Car(Vehicle):
-    doors = models.IntegerField()
+    def withdraw(self, amount):
+        if amount > 0 and amount <= self._balance:
+            self._balance -= amount
+            self.save()
 
-    def vehicle_info(self):
-        return f"{self.brand} Car with {self.doors} doors costs {self.price:g}"
+    def get_balance(self):
+        return self._balance
 
-
-class Motorcycle(Vehicle):
-    helmet_included = models.BooleanField(default=False)
-
-    def vehicle_info(self):
-        return f"{self.brand} Motorcycle costs {self.price:g}"
+    def set_balance(self, amount):
+        if amount >= 0:
+            self._balance = amount
+            self.save()
